@@ -5,6 +5,8 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SideNavBar from "./components/SideNav";
 import CenPas from "./components/CenPas";
+import AngPrime from "./components/AngPrime";
+import Embark from "./components/Embark";
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
@@ -24,35 +26,15 @@ function App() {
             path="/cenpas"
             element={<CenPas />}
           />
-          {/* <Route
+          <Route
             path="/embark"
             element={<Embark />}
           />
           <Route
             path="/angprime"
             element={<AngPrime />}
-          /> */}
+          />
         </Routes>
-        {/* <div className="container">
-          <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-          <form
-            className="row"
-            onSubmit={(e) => {
-              e.preventDefault();
-              greet();
-            }}
-          >
-            <input
-              id="greet-input"
-              onChange={(e) => setName(e.currentTarget.value)}
-              placeholder="Enter a name..."
-            />
-            <button type="submit">Greet</button>
-          </form>
-
-          <p>{greetMsg}</p>
-        </div> */}
       </Router>
     </>
   );
