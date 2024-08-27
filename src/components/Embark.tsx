@@ -15,7 +15,6 @@ const MyForm: React.FC = () => {
         "Content-Type": "application/xml",
       },
     });
-
     console.log(res);
   };
 

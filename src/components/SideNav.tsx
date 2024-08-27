@@ -1,70 +1,83 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Toolbar from "@mui/material/Toolbar";
-import { Link } from "react-router-dom";
+import React from "react";
+import { List, ListItemButton, ListItemText } from "@mui/material";
+import { Link, useLocation } from "react-router-dom";
 
-const drawerWidth = 240;
+type SubRoutes = Record<string, string>;
+
+interface RouteEntry {
+  name: string;
+  main: string;
+  subRoutes: SubRoutes;
+}
+
+type MyPaths = Record<string, RouteEntry>;
+
+const navRoutes: MyPaths = {
+  cenpas: {
+    name: "CenPas",
+    main: "/cenpas",
+    subRoutes: {
+      someSubRoute: "/cenpas/somesubroute",
+    },
+  },
+  embark: {
+    name: "Embark",
+    main: "/embark",
+    subRoutes: {
+      someSubRoute: "/embark/somesubroute",
+    },
+  },
+  angprime: {
+    name: "AngPrime",
+    main: "/angprime",
+    subRoutes: {
+      someSubRoute: "/angprime/somesubroute",
+    },
+  },
+};
 
 const SideNavBar: React.FC = () => {
-  const drawer = (
-    <div>
-      <Toolbar />
-      <div>
-        <List>
-          <ListItem
-            button
-            key="CenPas"
-            component={Link}
-            to="/cenpas"
-          >
-            <ListItemText primary="CenPas" />
-          </ListItem>
-          <ListItem
-            button
-            key="Embark"
-            component={Link}
-            to="/embark"
-          >
-            <ListItemText primary="Embark" />
-          </ListItem>
-          <ListItem
-            button
-            key="AngPrime"
-            component={Link}
-            to="/angprime"
-          >
-            <ListItemText primary="AngPrime" />
-          </ListItem>
-        </List>
-      </div>
-    </div>
-  );
+  const location = useLocation();
+
+  const navKeys = Object.keys(navRoutes);
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <Drawer
-        variant="permanent"
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
-            width: drawerWidth,
-            boxSizing: "border-box",
-          },
-        }}
-      >
-        {drawer}
-      </Drawer>
-      <Box
-        component="main"
-        sx={{ flexGrow: 1, p: 3 }}
-      ></Box>
-    </Box>
-  );
+    <List>
+      {navKeys.map((navKey: string) => {
+        const navItems: RouteEntry = navRoutes[navKey];
+        return (
+          <div key={navKey}>
+            <ListItemButton
+              component={Link}
+              to={navItems.main}
+              sx={{
+                backgroundColor: location.pathname.startsWith(navItems.main)
+                  ? "blue"
+                  : "transparent",
+              }}
+            >
+              <ListItemText primary={navItems.name} />
+            </ListItemButton>
+            {Object.entries(navItems.subRoutes).map(([key, route]) => (
+              <ListItemButton
+                key={key}
+                component={Link}
+                to={route}
+                sx={{
+                  backgroundColor:
+                    location.pathname === route ? "lightblue" : "transparent",
+                }}
+              >
+                <ListItemText primary={key} />
+              </ListItemButton>
+            ))}
+          </div>
+        );
+      }
+      )}
+
+    </List>
+  )
 };
 
 export default SideNavBar;
