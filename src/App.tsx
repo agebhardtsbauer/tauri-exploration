@@ -8,9 +8,11 @@ import { BasicSideNav } from "./components/BasicSideNav";
 import CenPas from "./components/CenPas";
 import AngPrime from "./components/AngPrime";
 import Embark from "./components/Embark";
-import { ThemeProvider } from "@mui/material";
+import { ThemeProvider, withTheme } from "@mui/material";
 import { dark } from "@mui/material/styles/createPalette";
-
+import { CardView } from "./components/CardView";
+import { GetPokemon } from "./components/GetPokemon";
+import { SudokuGrid } from "./components/SudokuSolver";
 // const darkTheme = {
 //   palette: {
 //     mode: "dark",
@@ -25,6 +27,10 @@ interface RouteEntry {
 
 const navRoutes: RouteEntry[] = [
   {
+    name: "Sudoku Solver",
+    route: "/sudokusolver",
+  },
+  {
     name: "CenPas LOL",
     route: "/cenpas",
     subRoutes: [
@@ -34,6 +40,11 @@ const navRoutes: RouteEntry[] = [
       },
     ],
   },
+  {
+    name: "Get Pokemon",
+    route: "/getpokemon",
+  },
+
   {
     name: "Embark",
     route: "/embark",
@@ -107,6 +118,10 @@ function App() {
         <BasicSideNav navItems={navRoutes} />
         <Routes>
           <Route
+            path="/sudokusolver"
+            element={<SudokuGrid />}
+          />
+          <Route
             path="/cenpas"
             element={<CenPas />}
           />
@@ -117,6 +132,14 @@ function App() {
           <Route
             path="/angprime"
             element={<AngPrime />}
+          />
+          <Route
+            path="/cenpas/somesubroute"
+            element={<CardView />}
+          />
+          <Route
+            path="/getpokemon"
+            element={<GetPokemon />}
           />
         </Routes>
       </Router>
